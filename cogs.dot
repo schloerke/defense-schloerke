@@ -1,0 +1,35 @@
+digraph G {
+
+  compound = true;
+  splines = false;
+  rankdir = "LR"
+
+  subgraph cluster_layers {
+    style = solid;
+    color = black;
+    label = "Plot Layers"
+    "Scatterplot"
+    "Smooth Curve"
+    "Loess Curve"
+  }
+
+  "Scatterplot" -> "Univariate X"
+  "Scatterplot" -> "Univariate Y"
+  "Scatterplot" -> "Bivariate X, Y"
+  "Scagnostics X, Y" -> "Scatterplot" [dir = "back"]
+  "Scatterplot" -> "Bivariate Counts"
+
+
+  "Smooth Curve" -> "Univariate X"
+  "Smooth Curve" -> "Univariate Y"
+  "Smooth Curve" -> "Bivariate X, Y"
+  "Smooth Line X, Y" -> "Smooth Curve" [dir = "back"]
+  "Smooth Curve" -> "Bivariate Counts"
+
+  "Loess Curve" -> "Univariate X"
+  "Loess Curve" -> "Univariate Y"
+  "Loess Curve" -> "Bivariate X, Y"
+  "Loess Curve X, Y" -> "Loess Curve" [dir = "back"]
+  "Loess Curve" -> "Bivariate Counts"
+
+}
