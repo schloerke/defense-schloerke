@@ -24,7 +24,7 @@ az %>%
     panel = map_plot(data, ~ ggplot(.x, mapping = aes(time, medListPriceSqft)) + geom_point() + geom_smooth() + ylim(az_y[1], az_y[2])
     )
   ) %>%
-  trelliscope("arizona", "housing", path = "housing_list_price_az", nrow = 3, ncol = 5, self_contained = TRUE, state = list(sort = list(sort_spec("county"), sort_spec("state"))))
+  trelliscope("arizona", "housing", path = "housing_list_price_az", nrow = 3, ncol = 5, state = list(sort = list(sort_spec("county"), sort_spec("state"))))
 
 housing %>%
   filter(state == "TX") %>%
@@ -39,9 +39,9 @@ tx %>%
   ) ->
 tx_data
 tx_data %>%
-  trelliscope("texas", "housing", path = "housing_list_price_tx", nrow = 11, ncol = 23, self_contained = TRUE, state = list(sort = list(sort_spec("county"), sort_spec("state"))))
+  trelliscope("texas", "housing", path = "housing_list_price_tx", nrow = 11, ncol = 23, state = list(sort = list(sort_spec("county"), sort_spec("state"))))
 
-
+housing_y <- range(housing$medListPriceSqft, na.rm = TRUE)
 
 housing %>%
   group_by(county, state) %>%
@@ -65,14 +65,32 @@ housing %>%
         sprintf("http://www.zillow.com/homes/%s-%s_rb/", county_, state_),
         "zillow link"
       )
-    })
-  )
+    }),
+    panel = map_plot(data, ~
+      ggplot(.x, mapping = aes(time, medListPriceSqft)) +
+        geom_point() +
+        geom_smooth(method = "loess") +
+        ylim(housing_y[1], housing_y[2]))
+  ) %>%
+  trelliscope(
+    "by_hand", "housing", nrow = 3, ncol = 5,
+    path = "demo",
+    state = list(sort =
+      list(sort_spec("county"), sort_spec("state"))))
+
+
+
+
 
 
 
 tx_data %>%
   autocogs::add_panel_cogs()
 
+tx_data %>%
+  autocogs::add_panel_cogs()
+
+qplot(x,y,data = tx, geoms = c("points", "smooth")) + facet_trell(auto_cogs = TRUE)
 
 
 
@@ -189,3 +207,95 @@ ggnostic(
     .cooksd = wrap(ggally_nostic_cooksd, outlier.shape = 21)
   )
 )
+
+
+
+housing_y <- range(housing$medListPriceSqft, na.rm = TRUE)
+
+# set up data
+housing %>%
+  group_by(county, state) %>%
+  nest() %>%
+  filter(map_dbl(data, nrow) > 10) %>%
+
+  # visualize data
+  mutate(
+    panel = map_plot(data, ~
+      ggplot(.x, mapping = aes(time, medListPriceSqft)) +
+        geom_point() +
+        geom_smooth(method = "loess") +
+        ylim(housing_y[1], housing_y[2]))) %>%
+
+  # create trelliscope application
+  trelliscope(
+    "all_states", "housing", nrow = 3, ncol = 5,
+    path = "housing_list_price",
+    state = list(sort =
+      list(sort_spec("county"), sort_spec("state"))))
+
+# # A tibble: 2,945 x 4
+#                county  state              data    panel
+#                <fctr> <fctr>            <list>   <list>
+#  1 Los Angeles County     CA <tibble [92 x 5]> <S3: gg>
+#  2        Cook County     IL <tibble [97 x 5]> <S3: gg>
+#  3    Maricopa County     AZ <tibble [97 x 5]> <S3: gg>
+#  4   San Diego County     CA <tibble [97 x 5]> <S3: gg>
+#  5      Orange County     CA <tibble [92 x 5]> <S3: gg>
+#  6       Kings County     NY <tibble [97 x 5]> <S3: gg>
+#  7  Miami-Dade County     FL <tibble [97 x 5]> <S3: gg>
+#  8      Dallas County     TX <tibble [97 x 5]> <S3: gg>
+#  9      Queens County     NY <tibble [97 x 5]> <S3: gg>
+# 10   Riverside County     CA <tibble [97 x 5]> <S3: gg>
+# # ... with 2,935 more rows
+
+
+
+
+# set up data
+housing %>%
+  group_by(county, state) %>%
+  nest() %>%
+  filter(map_dbl(data, nrow) > 10) %>%
+
+  # visualize data
+  mutate(
+    panel = map_plot(data, ~
+      ggplot(.x, mapping = aes(as.numeric(time), medListPriceSqft)) +
+        geom_point() +
+        geom_smooth(method = "loess") +
+        ylim(housing_y[1], housing_y[2]))) %>%
+
+  # add automatic cognostics
+  add_panel_cogs() %>%
+
+  # create trelliscope application
+  trelliscope(
+    "all_states_auto", "housing", nrow = 3, ncol = 5,
+    path = "housing_list_price_auto",
+    state = list(sort =
+      list(sort_spec("county"), sort_spec("state"))))
+
+# # A tibble: 2,945 x 11
+#                county  state              data    panel    `_scagnostic`
+#                <fctr> <fctr>            <list>   <list>           <list>
+#  1 Los Angeles County     CA <tibble [92 x 5]> <S3: gg> <tibble [1 x 9]>
+#  2        Cook County     IL <tibble [97 x 5]> <S3: gg> <tibble [1 x 9]>
+#  3    Maricopa County     AZ <tibble [97 x 5]> <S3: gg> <tibble [1 x 9]>
+#  4   San Diego County     CA <tibble [97 x 5]> <S3: gg> <tibble [1 x 9]>
+#  5      Orange County     CA <tibble [92 x 5]> <S3: gg> <tibble [1 x 9]>
+#  6       Kings County     NY <tibble [97 x 5]> <S3: gg> <tibble [1 x 9]>
+#  7  Miami-Dade County     FL <tibble [97 x 5]> <S3: gg> <tibble [1 x 9]>
+#  8      Dallas County     TX <tibble [97 x 5]> <S3: gg> <tibble [1 x 9]>
+#  9      Queens County     NY <tibble [97 x 5]> <S3: gg> <tibble [1 x 9]>
+# 10   Riverside County     CA <tibble [97 x 5]> <S3: gg> <tibble [1 x 9]>
+# # ... with 2,935 more rows, and 6 more variables: `_x` <list>, `_y` <list>,
+# #   `_bivar` <list>, `_smooth` <list>, `_loess` <list>, `_n` <list>
+
+
+
+
+ggplot(housing, mapping = aes(time, medListPriceSqft)) +
+  geom_point() +
+  geom_smooth(method = "loess") +
+  ylim(housing_y[1], housing_y[2]) +
+  facet_trelliscope(~ county + state, auto_cog = TRUE, scales = "free")
