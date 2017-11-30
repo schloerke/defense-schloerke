@@ -1,20 +1,25 @@
 # Thesis Defense
 
-Barret Schloerke
+Oral Public Examination for the Degree of Doctor of Philosophy
 
 ## Title
 
 Generalized Plot Matrices, Automatic Cognostics, and Efficient Data Exploration
 
-## Time
+by Barret Schloerke
 
-10:00 am
-November 29th, 2017
+## When
 
-## Location
+10:00 am - 12:00 pm
+
+Wednesday, November 29th, 2017
+
 111 HAAS Hall
+
 Purdue University
+
 West Lafayette, IN
+
 47906
 
 
