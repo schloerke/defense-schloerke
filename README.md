@@ -10,21 +10,17 @@ by Barret Schloerke
 
 ## When
 
-10:00 am - 12:00 pm
+10:00 am - 12:00 pm<br/>
+Wednesday, November 29th, 2017<br/>
 
-Wednesday, November 29th, 2017
-
-111 HAAS Hall
-
-Purdue University
-
-West Lafayette, IN
-
+111 HAAS Hall<br/>
+Purdue University<br/>
+West Lafayette, IN<br/>
 47906
 
 
 ## Slides
 
 Animation Build Slides: [defense-schloerke.pdf](https://github.com/schloerke/defense-schloerke/blob/master/defense-schloerke.pdf)
-
+<br/>
 Single Slides: [defense-schloerke-single.pdf](https://github.com/schloerke/defense-schloerke/blob/master/defense-schloerke-single.pdf)
