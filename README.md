@@ -21,6 +21,5 @@ West Lafayette, IN<br/>
 
 ## Slides
 
-Animation Build Slides: [defense-schloerke.pdf](https://github.com/schloerke/defense-schloerke/blob/master/defense-schloerke.pdf)
-<br/>
-Single Slides: [defense-schloerke-single.pdf](https://github.com/schloerke/defense-schloerke/blob/master/defense-schloerke-single.pdf)
+Single Slides: [defense-schloerke.pdf](https://github.com/schloerke/defense-schloerke/blob/master/defense-schloerke.pdf)<br/>
+Build Slides: [defense-schloerke-multi.pdf](https://github.com/schloerke/defense-schloerke/blob/master/defense-schloerke-multi.pdf)
